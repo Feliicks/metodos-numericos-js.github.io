@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/mathjs@11.3.1/lib/browser/math.js"></script>
+    <script src="script.js"  ></script>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <script src="math.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-1.35.2.min.js"></script>
+
+    
+    <title>Newton-Raphson</title>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Métodos numericos</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02"
+            aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor02">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/">Home
+                        <span class="visually-hidden">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Metodos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Otros métodos</a>
+                </li>
+                </li>
+                </li>
+            </ul>
+            <!-- <form class="d-flex">
+                <input class="form-control me-sm-2" type="text" placeholder="Search">
+                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+            </form> -->
+        </div>
+    </div>
+</nav>
+    <h1 class="text-center m-5">Método de Newton Newton-Raphson</h1>
+      <!-- <div class="form-group has-success">
+        <label class="form-label mt-4" for="inputValid">Valid input</label>
+        <input type="text" value="correct value" class="form-control is-valid" id="inputValid">
+        <div class="valid-feedback">Success! You've done it.</div>
+      </div>
+      <div class="form-group has-danger">
+        <label class="form-label mt-4" for="inputInvalid">Invalid input</label>
+        <input type="text" value="wrong value" class="form-control is-invalid" id="inputInvalid">
+        <div class="invalid-feedback">Sorry, that username's taken. Try another?</div>
+      </div> -->
+      <div class="form-group">
+        
+        <label class="col-form-label mt-4 m-4" for="inputDefault">Ingrese la funcion</label>
+        <input type="text" class="form-control m-3 " placeholder="Función"  name="input_function" id="input_function" size=40 style="width:500px">
+        <input type="text" class="form-control m-3" placeholder="Valor inicial"  name="valor_inicial" id="valor_inicial" size=40 style="width:500px">
+      </div>
+      <br>
+      <div class="container text-center" >
+        <button onclick="resolver_newthon()" class="btn btn-dark ">Resolver</button>
+      </div>
+      
+      <!-- <button onclick="get_function()" >Evaluar</button> -->
+      <p id="funcion-estatica" class="m-5">
+         
+      </p>
+      <p id="val-init">
+        
+      </p>
+
+      <p id ="output-p">
+        <div id = "plot"></div>
+        <div id="resultado" class="align-items-center  text-center container"  style="width: 1000px"></div>
+      </p>
+      <br>
+        </div>
+      </div>
+</body>
+</html>
