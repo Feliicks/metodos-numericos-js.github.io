@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns="http://www.w3.org/1998/Math/MathML">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <script src="https://cdn.plot.ly/plotly-1.35.2.min.js"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://unpkg.com/mathjs@11.4.0/lib/browser/math.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
     <script src="https://unpkg.com/mathjs@11.3.1/lib/browser/math.js"></script>
     <script src="script.js"  ></script>
-    <link rel="stylesheet" href="bootstrap.min.css">
-    <script src="math.min.js"></script>
-    <script src="https://cdn.plot.ly/plotly-1.35.2.min.js"></script>
-
+    
     
     <title>Newton-Raphson</title>
 </head>
@@ -37,33 +40,33 @@
                 </li>
                 </li>
             </ul>
-            <!-- <form class="d-flex">
-                <input class="form-control me-sm-2" type="text" placeholder="Search">
-                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-            </form> -->
         </div>
     </div>
 </nav>
     <h1 class="text-center m-5">Método de Newton Newton-Raphson</h1>
-      <!-- <div class="form-group has-success">
-        <label class="form-label mt-4" for="inputValid">Valid input</label>
-        <input type="text" value="correct value" class="form-control is-valid" id="inputValid">
-        <div class="valid-feedback">Success! You've done it.</div>
-      </div>
-      <div class="form-group has-danger">
-        <label class="form-label mt-4" for="inputInvalid">Invalid input</label>
-        <input type="text" value="wrong value" class="form-control is-invalid" id="inputInvalid">
-        <div class="invalid-feedback">Sorry, that username's taken. Try another?</div>
-      </div> -->
       <div class="form-group">
         
         <label class="col-form-label mt-4 m-4" for="inputDefault">Ingrese la funcion</label>
-        <input type="text" class="form-control m-3 " placeholder="Función"  name="input_function" id="input_function" size=40 style="width:500px">
+        <input type="text" class="form-control m-3 " placeholder="radio"  name="radio" id="radio" size=40 style="width:500px" />
+        <input type="text" class="form-control m-3 " placeholder="gravedad_especifica"  name="gravedad_especifica" id="gravedad_especifica" size=40 style="width:500px" />
+        <div class="container text-center" >
+          <button onclick="generar_ed()" class="btn btn-dark ">Generar Ecuacion diferencial</button>
+        </div>
+        <input type="text" class="form-control m-3 " placeholder="Función"  name="input_function" id="input_function" size=40 style="width:500px" />
         <input type="text" class="form-control m-3" placeholder="Valor inicial"  name="valor_inicial" id="valor_inicial" size=40 style="width:500px">
       </div>
+      
+      <div id="pretty" class="container text-center"></div>
+      <div id="result"></div>
+      
+  
+ 
       <br>
       <div class="container text-center" >
-        <button onclick="resolver_newthon()" class="btn btn-dark ">Resolver</button>
+        <button onclick="resolver_newthon();" class="btn btn-dark ">Resolver</button>
+      </div>
+      <div class="container text-center" >
+        <button onclick="evaluacion_()" class="btn btn-dark ">Evaluar</button>
       </div>
       
       <!-- <button onclick="get_function()" >Evaluar</button> -->
@@ -72,6 +75,7 @@
       </p>
       <p id="val-init">
         
+        <div id="resultado_evaluado" ></div>
       </p>
 
       <p id ="output-p">
@@ -81,5 +85,91 @@
       <br>
         </div>
       </div>
+      <div style="width: 700px" class="align-items-center  text-center container">
+
+      </div>
+      <script>
+    document.getElementById('result').style.display = "none"
+
+        function generar_ed(){
+          let salida = document.getElementById("input_function");
+          let radio= document.getElementById("radio");
+          //radio= radio.value*3;
+          let gravedad = document.getElementById("gravedad_especifica");
+          //gravedad=gravedad
+          
+          console.log(radio.value);
+          console.log(gravedad.value);
+          let n_r= math.round(3*radio.value,6)
+          let n_g= math.round(4*gravedad.value*math.pow(radio.value,3),6)
+          let final_exp= `x^3 -${n_r} x^2+ ${n_g}`
+          console.log (final_exp)
+          console.log (math.parse(final_exp).toString())
+          salida.value=final_exp;
+
+
+        }
+        function prueba_function(){
+          let input_function = math.parse(document.getElementById("input_function").value);    
+    console.log(input_function.toString())
+    
+    console.log("evaluado es: "+ math.format(input_function.compile().evaluate()))
+    
+
+}
+        function evaluacion_() {
+    document.getElementById('result').style.display = "block"
+
+          document.getElementById("resultado_evaluado").style.display = "none"
+    const expr = document.getElementById('input_function')
+    let node = math.parse(expr.value)
+    let resultado =document.getElementById('resultado_evaluado')
+    resultado.innerHTML=math.format(node.compile().evaluate());
+}
+        //document.getElementById('result').style.display = "block"
+        const expr = document.getElementById('input_function')
+const pretty = document.getElementById('pretty')
+const result = document.getElementById('result')
+let parenthesis = 'keep'
+let implicit = 'hide'
+
+const mj = function (tex) {
+    return MathJax.tex2svg(tex, {em: 16, ex: 6, display: false});
+  }
+
+  // initialize with an example expression
+  expr.value = '3-0.165^2+0.0003993'
+  pretty.innerHTML = '';
+  pretty.appendChild(mj(math.parse(expr.value).toTex({parenthesis: parenthesis})));
+  result.innerHTML = math.format(math.evaluate(expr.value))
+
+  expr.oninput = function () {
+    let node = null
+
+    try {
+      // parse the expression
+      node = math.parse(expr.value)
+
+      // evaluate the result of the expression
+      result.innerHTML = math.format(node.compile().evaluate())
+    }
+    catch (err) {
+      result.innerHTML = '<span style="color: red;">' + err.toString() + '</span>'
+    }
+
+    try {
+      // export the expression to LaTeX
+      const latex = node ? node.toTex({parenthesis: parenthesis, implicit: implicit}) : ''
+      console.log('LaTeX expression:', latex)
+
+      // display and re-render the expression
+      MathJax.typesetClear();
+      pretty.innerHTML = '';
+      pretty.appendChild(mj(latex));
+    }
+    catch (err) {}
+  }
+  
+      </script>
 </body>
 </html>
